@@ -52,7 +52,7 @@ export default function AppFunctional(props) {
           newIndex = Index - 1;
           newSteps += 1;
         } else {
-          message = "You can't go left"
+          message = "Sola gidemezsiniz"
         }
         break;
       case 'right':
@@ -60,7 +60,7 @@ export default function AppFunctional(props) {
           newIndex = Index + 1;
           newSteps += 1;
         }else {
-          message = "You can't go right"
+          message = "Sağa gidemezsiniz"
         }
         break;
       case 'up':
@@ -68,7 +68,7 @@ export default function AppFunctional(props) {
           newIndex = Index - 3;
           newSteps += 1;
         }else {
-          message = "You can't go up"
+          message = "Yukarıya gidemezsiniz"
         }
         break;
       case 'down':
@@ -76,7 +76,7 @@ export default function AppFunctional(props) {
           newIndex = Index + 3;
           newSteps += 1;
         }else {
-          message = "You can't go down"
+          message = "Aşağıya gidemezsiniz"
         }
         break;
       default:
@@ -96,11 +96,9 @@ export default function AppFunctional(props) {
     // payloadu POST etmek için bir submit handlera da ihtiyacınız var.
     event.preventDefault();
     axios.post("http://localhost:9000/api/result", postValues)
-    .then((response)=>console.log(response.data))
-    .catch(()=>"Unprocessable Entity");
-    setFormData({...formData, Email:""})
+    .then((response)=>setFormData({...formData, Message: response.data.message, Email:""}))
+    .catch((error)=>setFormData({...formData, Message: error.response.data.message, Email:""}));
   }
-  console.log(formData);
 
   return (
     <div id="wrapper" className={props.className}>
@@ -127,9 +125,9 @@ export default function AppFunctional(props) {
         <button id="down" onClick={() => sonrakiIndex('down')}>AŞAĞI</button>
         <button id="reset" onClick={reset}>reset</button>
       </div>
-      <form > 
-        <input id="email" type="email" placeholder="email girin" name="Email" onChange={onChange}></input>
-        <input id="submit" type="submit" onClick={onSubmit}></input>
+      <form onSubmit={onSubmit}> 
+        <input id="email" type="email" placeholder="email girin" name="Email" onChange={onChange} value={formData.Email}></input>
+        <input id="submit" type="submit" ></input>
       </form>
     </div>
   )
