@@ -1,13 +1,11 @@
 // Write your tests here
-import { beforeEach, expect, test } from 'vitest';
+import { beforeEach, expect } from 'vitest';
 import React from 'react'
 
 import {
   render,
   screen,
   fireEvent,
-  waitFor,
-  getByText,
 } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import AppFunctional from './AppFunctional';
